@@ -8,19 +8,30 @@
     </h:head>
     <h:body>
         <h:form>
-            <h:panelGrid columns="2">
-                <h:outputLabel value="Temperatura:" for=" temperatura"/>
-                <h:inputText value="#{temperaturaBean.temperatura.temperatura}" id="temperatura"
-                             size="5"/>
-                <h:outputLabel value="Converter para:" for="converter"/>
-                <h:selectOneMenu value="#{temperaturaBean.temperatura.converterPara}" id="converter">
-                    <f:selectItems value="#{temperaturaBean.temperaturas}"/>
-                </h:selectOneMenu>                
-            </h:panelGrid>
-            <h:commandButton value="Converter" action="#{temperaturaBean.converter}"/>
-            <hr/>
-            <h:outputText value="#{temperaturaBean.temperatura.convertida} #{temperaturaBean.temperatura.converterPara}" 
-                          rendered="#{not empty temperaturaBean.temperatura.convertida}"/>
+            <h:panelGrid columns="3">
+			<h:outputLabel value="Temperatura:" for=" temperatura" />
+			<h:inputText value="#{temperaturaBean.temperatura.temperatura}"
+				id="temperatura" size="5"
+				validatorMessage="Alerta! A temperatura indicada não pode ser maior que 100, nem menor que -100! ">
+				<f:validateLongRange minimum="-100" maximum="100" />
+			</h:inputText>
+			<h:message for="temperatura" />
+			<h:outputLabel value="Converter para:" for="converter" />
+			<h:selectOneMenu value="#{temperaturaBean.temperatura.converterPara}"
+				id="converter">
+				<f:selectItems value="#{temperaturaBean.temperaturas}" />
+			</h:selectOneMenu>
+		</h:panelGrid>
+		<h:commandButton value="Converter"
+			action="#{temperaturaBean.converter}" />
+		<hr />
+		<h:outputText value=" #{temperaturaBean.temperatura.converterPara}"
+			rendered="#{not empty temperaturaBean.temperatura.convertida}">
+		</h:outputText>
+		<h:outputText value="#{temperaturaBean.temperatura.convertida}"
+			rendered="#{not empty temperaturaBean.temperatura.convertida}">
+			<f:convertNumber maxFractionDigits="1" />
+		</h:outputText>
         </h:form>
     </h:body>
 </html>
